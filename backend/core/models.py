@@ -17,7 +17,7 @@ class Service(Timestamped):
 class TeamMember(Timestamped):
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
-    photo_url = models.URLField(blank=True)
+    photo_url = models.URLField(blank=True, null= True)
     bio = models.TextField(blank=True)
 
     def __str__(self):

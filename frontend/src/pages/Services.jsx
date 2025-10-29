@@ -5,8 +5,14 @@ export default function Services() {
   const [services, setServices] = useState([]);
 
   useEffect(() => {
-    api.get("/services/")
-      .then((res) => setServices(Array.isArray(res.data) ? res.data : (res.data?.results ?? [])))
+    api
+      // ✅ Use base URL from environment variable (works in production too)
+      .get(`${import.meta.env.VITE_API_URL}services/`)
+      .then((res) =>
+        setServices(
+          Array.isArray(res.data) ? res.data : res.data?.results ?? []
+        )
+      )
       .catch((err) => {
         console.error("Error loading services:", err);
         setServices([]);
@@ -24,7 +30,9 @@ export default function Services() {
               key={s.id}
               className="bg-white shadow-lg rounded-2xl p-6 hover:-translate-y-1 transition"
             >
-              <h3 className="text-xl font-semibold text-primary mb-2">{s.title}</h3>
+              <h3 className="text-xl font-semibold text-primary mb-2">
+                {s.title}
+              </h3>
               <p className="text-gray-600">{s.description}</p>
             </div>
           ))}

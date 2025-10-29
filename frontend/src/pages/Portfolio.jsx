@@ -5,9 +5,20 @@ export default function Portfolio() {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    api.get("/projects/")
-      .then((r) => setProjects(Array.isArray(r.data) ? r.data : (r.data?.results ?? [])))
-      .catch(() => setProjects([]));
+    const fetchProjects = async () => {
+      try {
+        const res = await api.get(`${import.meta.env.VITE_API_URL}projects/`);
+        const data = Array.isArray(res.data)
+          ? res.data
+          : res.data?.results ?? [];
+        setProjects(data);
+      } catch (error) {
+        console.error("Error fetching projects:", error);
+        setProjects([]);
+      }
+    };
+
+    fetchProjects();
   }, []);
 
   return (
@@ -16,12 +27,30 @@ export default function Portfolio() {
       <div className="grid md:grid-cols-3 gap-4">
         {Array.isArray(projects) && projects.length > 0 ? (
           projects.map((p) => (
-            <div key={p.id} className="card">
+            <div key={p.id} className="card border rounded-lg p-4 shadow">
               <h3 className="font-semibold text-lg">{p.title}</h3>
               <p className="text-gray-600 mt-1">{p.description}</p>
               <div className="mt-3 space-x-3">
-                {p.live_url && <a className="link" href={p.live_url} target="_blank" rel="noreferrer">Live</a>}
-                {p.repo_url && <a className="link" href={p.repo_url} target="_blank" rel="noreferrer">Code</a>}
+                {p.live_url && (
+                  <a
+                    className="text-blue-600 hover:underline"
+                    href={p.live_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Live
+                  </a>
+                )}
+                {p.repo_url && (
+                  <a
+                    className="text-green-600 hover:underline"
+                    href={p.repo_url}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Code
+                  </a>
+                )}
               </div>
             </div>
           ))

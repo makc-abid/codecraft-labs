@@ -5,18 +5,18 @@ export default function About() {
   const [about, setAbout] = useState(null);
 
   useEffect(() => {
-    api.get("/pages/about/")
-      .then((r) => setAbout(r.data))
-      .catch(async () => {
-        try {
-          const res = await api.get("/pages/");
-          const list = Array.isArray(res.data) ? res.data : (res.data?.results ?? []);
-          const item = list.find((x) => x.slug === "about");
-          setAbout(item ?? null);
-        } catch {
-          setAbout(null);
-        }
-      });
+    const fetchAbout = async () => {
+      try {
+        // ✅ এখানে URL ঠিক করা হয়েছে (live API অনুযায়ী)
+        const res = await api.get(`${import.meta.env.VITE_API_URL}pages/about/`);
+        setAbout(res.data);
+      } catch (error) {
+        console.error("Error fetching About page:", error);
+        setAbout(null);
+      }
+    };
+
+    fetchAbout();
   }, []);
 
   return (
@@ -28,7 +28,7 @@ export default function About() {
           <p className="whitespace-pre-line">{about.content}</p>
         </article>
       ) : (
-        <p className="text-gray-500">Add an 'about' page in Django admin (slug=about).</p>
+        <p>Loading...</p>
       )}
     </div>
   );

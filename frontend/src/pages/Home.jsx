@@ -8,15 +8,16 @@ export default function Home() {
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
-    api.get("/services/")
+    // ✅ Use dynamic base URL from .env (important for production)
+    api.get(`${import.meta.env.VITE_API_URL}services/`)
       .then((r) => setServices(Array.isArray(r.data) ? r.data : (r.data?.results ?? [])))
       .catch(() => setServices([]));
 
-    api.get("/projects/")
+    api.get(`${import.meta.env.VITE_API_URL}projects/`)
       .then((r) => setProjects(Array.isArray(r.data) ? r.data : (r.data?.results ?? [])))
       .catch(() => setProjects([]));
 
-    api.get("/testimonials/")
+    api.get(`${import.meta.env.VITE_API_URL}testimonials/`)
       .then((r) => setTestimonials(Array.isArray(r.data) ? r.data : (r.data?.results ?? [])))
       .catch(() => setTestimonials([]));
   }, []);
