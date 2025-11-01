@@ -10,14 +10,18 @@ class Service(Timestamped):
     title = models.CharField(max_length=120)
     description = models.TextField()
     icon = models.CharField(max_length=64, blank=True)  # e.g., 'code', 'palette'
+    image = models.ImageField(upload_to='service_images/', null=True, blank=True)
 
     def __str__(self):
         return self.title
 
+from django.db import models
+
+   
 class TeamMember(Timestamped):
     name = models.CharField(max_length=100)
     role = models.CharField(max_length=100)
-    photo_url = models.URLField(blank=True, null= True)
+    image = models.ImageField(upload_to='member_images/', null=True, blank=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):

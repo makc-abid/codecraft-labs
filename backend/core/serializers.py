@@ -11,7 +11,7 @@ class ServiceSerializer(serializers.ModelSerializer):
 class TeamMemberSerializer(serializers.ModelSerializer):
     class Meta:
         model = TeamMember
-        fields = ['id', 'name', 'role', 'bio', 'photo_url', 'created', 'updated']
+        fields = '__all__'
 
 
 class ProjectSerializer(serializers.ModelSerializer):

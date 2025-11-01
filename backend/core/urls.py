@@ -1,5 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
+from django.conf import settings
 from .views import (
     ServiceViewSet, TeamViewSet, ProjectViewSet,
     TestimonialViewSet, PageViewSet, ContactMessageViewSet

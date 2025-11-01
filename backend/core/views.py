@@ -1,20 +1,26 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Service, TeamMember, Project, Testimonial, Page, ContactMessage
 from .serializers import (
     ServiceSerializer, TeamMemberSerializer, ProjectSerializer,
     TestimonialSerializer, PageSerializer, ContactMessageSerializer
 )
 
+
+
+
+
 class ServiceViewSet(viewsets.ModelViewSet):
     queryset = Service.objects.all().order_by('-created')
     serializer_class = ServiceSerializer
+    parser_classes = (MultiPartParser, FormParser)
 
 class TeamViewSet(viewsets.ModelViewSet):
     queryset = TeamMember.objects.all().order_by('name')
     serializer_class = TeamMemberSerializer
-
+    parser_classes = (MultiPartParser, FormParser)
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all().order_by('-created')
     serializer_class = ProjectSerializer
