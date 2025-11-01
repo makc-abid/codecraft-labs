@@ -3,6 +3,7 @@ import api from "../shared/api";
 
 export default function Services() {
   const [services, setServices] = useState([]);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     api
@@ -18,7 +19,9 @@ export default function Services() {
         setServices([]);
       });
   }, []);
-
+  function handleImageChange(event) {
+    setImage(event.target.files[0]);
+  }
   return (
     <div className="max-w-6xl mx-auto px-6 py-16">
       <h1 className="text-4xl font-bold text-center mb-12">Our Services</h1>
@@ -30,6 +33,13 @@ export default function Services() {
               key={s.id}
               className="bg-white shadow-lg rounded-2xl p-6 hover:-translate-y-1 transition"
             >
+               {s.image && (
+                  <img
+                      src={s.image.startsWith("http") ? s.image : `${import.meta.env.VITE_API_URL}${s.image}`}
+                      alt={s.title}
+                    className="w-full h-48 object-cover mb-4 rounded"
+                  />
+                )}
               <h3 className="text-xl font-semibold text-primary mb-2">
                 {s.title}
               </h3>

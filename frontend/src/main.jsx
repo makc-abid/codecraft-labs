@@ -8,6 +8,10 @@ import Portfolio from './pages/Portfolio.jsx'
 import Team from './pages/Team.jsx'
 import About from './pages/About.jsx'
 import Contact from './pages/Contact.jsx'
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
+import Refund from "./pages/Refund.jsx";
+import Career from "./pages/Career.jsx"; 
 import './styles.css'
 
 createRoot(document.getElementById('root')).render(
@@ -21,6 +25,11 @@ createRoot(document.getElementById('root')).render(
           <Route path='team' element={<Team />} />
           <Route path='about' element={<About />} />
           <Route path='contact' element={<Contact />} />
+          <Route path='privacy' element={<Privacy />} />
+          <Route path='terms' element={<Terms />} />
+          <Route path='refund' element={<Refund />} />
+          <Route path='career' element={<Career />} /> 
+          
         </Route>
       </Routes>
     </BrowserRouter>

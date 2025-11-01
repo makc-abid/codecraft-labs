@@ -22,7 +22,7 @@ export default function Contact() {
 
   return (
     <div className="max-w-xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6">Contact Us Testing...</h1>
+      <h1 className="text-3xl font-bold mb-6">Contact Us</h1>
 
       {done && (
         <div className="p-4 mb-4 border rounded-xl bg-green-50 text-green-800">

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+
 export default function Team() {
   const [team, setTeam] = useState([]);
-
+  const [image, setImage] = useState(null);
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}team/`)
       .then((res) => res.json())
@@ -17,10 +18,14 @@ export default function Team() {
         {team.length > 0 ? (
           team.map((m) => (
             <div key={m.id} className="bg-white shadow-lg rounded-2xl p-6 text-center">
-              {m.photo_url && (
-                <img
-                  src={m.photo_url}
-                  alt={m.name}
+              {m.image && (
+              <img
+                src={
+                  m.image.startsWith("http")
+                    ? m.image
+                    : `${import.meta.env.VITE_MEDIA_URL}${m.image}`
+                }
+                alt={m.name}
                   className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
                 />
               )}

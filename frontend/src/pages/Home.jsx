@@ -55,7 +55,16 @@ export default function Home() {
         <div className="grid md:grid-cols-3 gap-8">
           {Array.isArray(services) && services.length > 0 ? (
             services.map((s) => (
-              <div key={s.id} className="bg-white shadow-lg rounded-2xl p-6 text-center hover:-translate-y-1 transition">
+              <div
+              key={s.id} 
+              className="bg-white shadow-lg rounded-2xl p-6 text-center hover:-translate-y-1 transition">
+              {s.image && (
+                  <img
+                      src={s.image.startsWith("http") ? s.image : `${import.meta.env.VITE_API_URL}${s.image}`}
+                      alt={s.title}
+                    className="w-full h-48 object-cover mb-4 rounded"
+                  />
+                )}
                 <h3 className="text-xl font-semibold text-primary mb-2">{s.title}</h3>
                 <p className="text-gray-600">{s.description}</p>
               </div>
