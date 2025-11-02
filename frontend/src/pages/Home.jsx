@@ -7,6 +7,10 @@ export default function Home() {
   const [projects, setProjects] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
 
+  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+  const [done, setDone] = useState(false);
+  const [error, setError] = useState("");
+
   useEffect(() => {
     // ✅ Use dynamic base URL from .env (important for production)
     api.get(`${import.meta.env.VITE_API_URL}services/`)
@@ -21,7 +25,18 @@ export default function Home() {
       .then((r) => setTestimonials(Array.isArray(r.data) ? r.data : (r.data?.results ?? [])))
       .catch(() => setTestimonials([]));
   }, []);
-
+const submit = async (e) => {
+    e.preventDefault();
+    setError("");
+    try {
+      await api.post(`${import.meta.env.VITE_API_URL}contact/submit/`, form);
+      setDone(true);
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch (err) {
+      console.error("Consultation form failed:", err);
+      setError("Please check your inputs or try again later.");
+    }
+  };
   return (
     <div className="space-y-20">
       {/* Hero Section */}
@@ -40,7 +55,15 @@ export default function Home() {
           solutions — Web Development, UI/UX Design, Branding, and Marketing.
         </p>
         <div className="flex justify-center gap-4 mt-8">
-          <a href="/contact" className="btn bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90">
+          <a
+            href="#consultation"
+            onClick={(e) => {
+              e.preventDefault();
+              const section = document.getElementById("consultation");
+              section?.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="btn bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90"
+          >
             Get a Free Consultation
           </a>
           <a href="/portfolio" className="btn border border-primary text-primary px-6 py-2 rounded-lg hover:bg-primary hover:text-white">
@@ -126,6 +149,75 @@ export default function Home() {
           )}
         </div>
       </section>
+      {/* 🔹 Consultation Section (Pre-Footer CTA) */}
+ <section  id="consultation" className="bg-gradient-to-r from-blue-100 to-teal-100 py-16 px-6">
+      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+        {/* Left Section */}
+        <div>
+          <h2 className="text-4xl font-bold text-gray-800 mb-4">
+            Get Your Free <span className="text-blue-600">Consultation Today!</span>
+          </h2>
+          <p className="text-gray-700 mb-8">
+            Take the first step towards success. Schedule your free consultation today!
+          </p>
+        </div>
+
+        {/* Right Form */}
+        <div className="bg-white rounded-2xl shadow-md p-8">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-6">Book the call</h3>
+
+          {done && (
+            <div className="p-3 mb-4 bg-green-50 text-green-700 rounded-lg">
+              ✅ Thank you! We’ll reach out soon.
+            </div>
+          )}
+
+          {error && (
+            <div className="p-3 mb-4 bg-red-50 text-red-700 rounded-lg">
+              ⚠️ {error}
+            </div>
+          )}
+
+          <form onSubmit={submit} className="space-y-5">
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Phone Number"
+              className="w-full border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={form.phone}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
+            />
+            <textarea
+              placeholder="Message (optional)"
+              className="w-full border rounded-lg px-4 py-2 h-24 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={form.message}
+              onChange={(e) => setForm({ ...form, message: e.target.value })}
+            />
+            <button
+              type="submit"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200"
+            >
+              Get a Free Consultation
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
     </div>
   );
 }

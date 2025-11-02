@@ -1,3 +1,4 @@
+import logo from "../assets/logo.png";
 import React from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 
@@ -22,8 +23,12 @@ export default function App() {
       {/* 🔹 Header / Navbar */}
       <header className="border-b">
         <div className="container flex items-center justify-between h-16">
-          <Link to="/" className="font-bold text-xl">
-            Codecraft <span className="text-primary">Labs</span>
+          <Link to="/" className="flex items-center space-x-2">
+            <img
+              src={logo}
+              alt="Codecraft Labs Logo"
+              className="h-10 w-auto"
+            />
           </Link>
           <nav className="space-x-2">
             <NavLink to="/" label="Home" />
@@ -32,6 +37,7 @@ export default function App() {
             <NavLink to="/team" label="Team" />
             <NavLink to="/about" label="About" />
             <NavLink to="/contact" label="Contact" />
+            
           </nav>
         </div>
       </header>
