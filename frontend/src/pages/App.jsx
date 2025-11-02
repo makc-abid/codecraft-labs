@@ -131,7 +131,7 @@ export default function App() {
     <ul className="text-gray-300 text-sm space-y-2">
       <li className="whitespace-nowrap">📍 336 Essex Road, Islington, London N1 3PB</li>
       <li>📞 +44 7424 798912</li>
-      <li>✉️ info@teamcodecraft.co.uk</li>
+      <li>✉️ codecraftlabs.uk@gmail.com</li>
     </ul>
   </div>
 </div>
