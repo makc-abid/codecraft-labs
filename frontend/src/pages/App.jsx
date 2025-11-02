@@ -1,45 +1,88 @@
 import logo from "../assets/logo.png";
-import React from 'react'
+import React, { useState } from "react";
 import { Outlet, Link, useLocation } from 'react-router-dom'
+import { Menu, X } from "lucide-react"; // for hamburger icons
 
 const NavLink = ({ to, label }) => {
-  const { pathname } = useLocation()
-  const active = pathname === to
+  const { pathname } = useLocation();
+  const active = pathname === to;
   return (
     <Link
-      className={`px-3 py-2 rounded-xl ${
-        active ? 'bg-primary text-white' : 'hover:bg-gray-100'
-      }`}
       to={to}
+      className={`px-3 py-2 rounded-lg text-sm font-medium transition ${
+        active
+          ? "bg-blue-600 text-white"
+          : "text-gray-700 hover:text-blue-600"
+      }`}
     >
       {label}
     </Link>
-  )
-}
+  );
+};
+
 
 export default function App() {
+const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       {/* 🔹 Header / Navbar */}
-      <header className="border-b">
-        <div className="container flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2">
+      {/* 🔹 Header / Navbar */}
+      <header className="border-b bg-white shadow-sm sticky top-0 z-50">
+        <div className="container mx-auto flex items-center justify-between h-16 px-4">
+          {/* 🔹 Logo */}
+          <Link to="/" className="flex items-center font-bold text-xl">
             <img
               src={logo}
               alt="Codecraft Labs Logo"
-              className="h-10 w-auto"
+              className="h-8 w-auto mr-2"
             />
           </Link>
-          <nav className="space-x-2">
-            <NavLink to="/" label="Home" />
-            <NavLink to="/services" label="Services" />
-            <NavLink to="/portfolio" label="Portfolio" />
-            <NavLink to="/team" label="Team" />
-            <NavLink to="/about" label="About" />
-            <NavLink to="/contact" label="Contact" />
-            
+
+          {/* 🔹 Desktop Menu */}
+          <nav className="hidden md:flex space-x-4">
+            {[
+              { to: "/", label: "Home" },
+              { to: "/services", label: "Services" },
+              { to: "/portfolio", label: "Portfolio" },
+              { to: "/team", label: "Team" },
+              { to: "/about", label: "About" },
+              { to: "/contact", label: "Contact" },
+            ].map((item) => (
+              <NavLink key={item.to} to={item.to} label={item.label} />
+            ))}
           </nav>
+
+          {/* 🔹 Mobile Toggle Button */}
+          <button
+            className="md:hidden text-gray-700 focus:outline-none"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            {isOpen ? <X size={26} /> : <Menu size={26} />}
+          </button>
         </div>
+
+        {/* 🔹 Mobile Menu Dropdown */}
+        {isOpen && (
+          <div className="md:hidden bg-white border-t">
+            <nav className="flex flex-col items-center py-4 space-y-3">
+              {[
+                { to: "/", label: "Home" },
+                { to: "/services", label: "Services" },
+                { to: "/portfolio", label: "Portfolio" },
+                { to: "/team", label: "Team" },
+                { to: "/about", label: "About" },
+                { to: "/contact", label: "Contact" },
+              ].map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  label={item.label}
+                  onClick={() => setIsOpen(false)}
+                />
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* 🔹 Main content */}
