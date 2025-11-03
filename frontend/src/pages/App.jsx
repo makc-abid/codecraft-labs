@@ -26,7 +26,6 @@ const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
       {/* 🔹 Header / Navbar */}
-      {/* 🔹 Header / Navbar */}
       <header className="border-b bg-white shadow-sm sticky top-0 z-50">
         <div className="container mx-auto flex items-center justify-between h-16 px-4">
           {/* 🔹 Logo */}

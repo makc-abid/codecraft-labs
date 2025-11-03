@@ -26,7 +26,7 @@ export default function Team() {
                     : `${import.meta.env.VITE_MEDIA_URL}${m.image}`
                 }
                 alt={m.name}
-                  className="w-32 h-32 rounded-full mx-auto mb-4 object-cover"
+                  className="w-60 h-60 mx-auto mb-4 object-cover"
                 />
               )}
               <h3 className="text-xl font-semibold text-primary mb-1">{m.name}</h3>
