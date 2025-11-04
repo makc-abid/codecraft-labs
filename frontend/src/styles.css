@@ -9,3 +9,5 @@ body { @apply bg-white text-gray-900 font-sans; }
 .btn { @apply inline-flex items-center px-5 py-3 rounded-xl font-medium hover:opacity-90 transition; }
 .btn-primary { @apply bg-primary text-white; }
 .link { @apply text-primary hover:underline; }
+
+

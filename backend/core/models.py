@@ -30,7 +30,7 @@ class TeamMember(Timestamped):
 class Project(Timestamped):
     title = models.CharField(max_length=150)
     description = models.TextField()
-    image_url = models.URLField(blank=True)
+    image = models.ImageField(upload_to='project_images/', null=True, blank=True)
     live_url = models.URLField(blank=True)
     repo_url = models.URLField(blank=True)
     tags = models.CharField(max_length=200, blank=True)  # comma-separated

@@ -100,33 +100,68 @@ const submit = async (e) => {
 
       {/* Projects Section */}
       <section className="bg-gray-100 py-16">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center mb-10">Recent Projects</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            {Array.isArray(projects) && projects.length > 0 ? (
-              projects.slice(0, 3).map((p) => (
-                <div key={p.id} className="bg-white rounded-2xl shadow-lg p-6 hover:-translate-y-1 transition">
-                  <h3 className="text-xl font-semibold text-primary mb-2">{p.title}</h3>
-                  <p className="text-gray-600 mb-3">{p.description}</p>
-                  <div className="space-x-4">
-                    {p.live_url && (
-                      <a href={p.live_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">
-                        Live ↗
-                      </a>
-                    )}
-                    {p.repo_url && (
-                      <a href={p.repo_url} target="_blank" rel="noreferrer" className="text-primary hover:underline">
-                        Code ↗
-                      </a>
-                    )}
-                  </div>
+<div className="max-w-6xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-bold text-center mb-12">Recent Projects</h1>
+
+      {projects.length > 0 ? (
+        <div className="flex flex-col space-y-16">
+          {projects.map((p, i) => (
+            <div
+              key={p.id}
+              className={`flex flex-col md:flex-row items-center gap-10 ${
+                i % 2 !== 0 ? "md:flex-row-reverse" : ""
+              }`}
+            >
+              {/* ✅ Image load from Django (SQLite media) */}
+              {p.image && (
+                <img
+                  src={
+                    p.image.startsWith("http")
+                      ? p.image
+                      : `${import.meta.env.VITE_API_URL}${p.image}`
+                  }
+                  alt={p.title}
+                  className="w-full md:w-1/2 rounded-xl shadow-lg object-cover"
+                />
+              )}
+
+              {/* ✅ Text part */}
+              <div className="md:w-1/2">
+                <h2 className="text-3xl font-bold mb-4">{p.title}</h2>
+                <p className="text-gray-600 mb-4">{p.description}</p>
+
+                <div className="flex space-x-6">
+                  {p.live_url && (
+                    <a
+                      href={p.live_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-blue-600 font-medium hover:underline"
+                    >
+                      Live →
+                    </a>
+                  )}
+                  {p.repo_url && (
+                    <a
+                      href={p.repo_url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-green-600 font-medium hover:underline"
+                    >
+                      Code →
+                    </a>
+                  )}
                 </div>
-              ))
-            ) : (
-              <p className="col-span-3 text-center text-gray-500">No projects found.</p>
-            )}
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
+      ) : (
+        <p className="text-center text-gray-500 mt-10">
+          No projects yet. Add from Django admin.
+        </p>
+      )}
+    </div>
       </section>
 
       {/* Testimonials Section */}
@@ -155,7 +190,7 @@ const submit = async (e) => {
         {/* Left Section */}
         <div>
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Get Your Free <span className="text-blue-600">Consultation Today!</span>
+            Get Your Free <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">Consultation Today!</span>
           </h2>
           <p className="text-gray-700 mb-8">
             Take the first step towards success. Schedule your free consultation today!
